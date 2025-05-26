@@ -22,6 +22,7 @@ class ChatViewModel: ObservableObject {
             fatalError("OpenRouter API key missing in Info.plist")
         }
     }
+    @Published var isTyping: Bool = false
 
 
 
@@ -47,7 +48,12 @@ class ChatViewModel: ObservableObject {
     }
 
     func fetchBotReply(for prompt: String) {
-        guard let url = URL(string: "https://openrouter.ai/api/v1/chat/completions") else { return }
+        isTyping = true // START typing indicator
+
+        guard let url = URL(string: "https://openrouter.ai/api/v1/chat/completions") else {
+            isTyping = false
+            return
+        }
 
         let payload: [String: Any] = [
             "model": "openai/gpt-3.5-turbo",
@@ -61,6 +67,12 @@ class ChatViewModel: ObservableObject {
         request.httpBody = try? JSONSerialization.data(withJSONObject: payload)
 
         URLSession.shared.dataTask(with: request) { data, _, _ in
+            defer {
+                DispatchQueue.main.async {
+                    self.isTyping = false // END typing indicator
+                }
+            }
+
             guard let data = data,
                   let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
                   let choices = json["choices"] as? [[String: Any]],
@@ -75,6 +87,7 @@ class ChatViewModel: ObservableObject {
             }
         }.resume()
     }
+
 
     func requestPermissions(completion: @escaping (Bool) -> Void) {
         SFSpeechRecognizer.requestAuthorization { status in

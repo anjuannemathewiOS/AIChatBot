@@ -4,21 +4,27 @@
 //
 //  Created by Anju Anne Mathew on 21/05/2025.
 //
-
 import SwiftUI
 
 struct MessageRowView: View {
     let message: ChatMessage
     let isUser: Bool
-
+    
     var body: some View {
-        HStack(alignment: .center, spacing: 8) {
+        HStack(alignment: .bottom, spacing: 8) {
             if !isUser {
                 avatar
             }
-
-            messageBubble
-
+            
+            Text(message.text)
+                .padding(14)
+                .background(isUser ? Color.blue : Color.white)
+                .foregroundColor(isUser ? .white : .primary)
+                .font(.system(size: 16))
+                .clipShape(RoundedRectangle(cornerRadius: 16))
+                .shadow(color: isUser ? .blue.opacity(0.3) : .black.opacity(0.05), radius: 2, x: 0, y: 1)
+                .frame(maxWidth: 280, alignment: isUser ? .trailing : .leading)
+            
             if isUser {
                 avatar
             }
@@ -27,23 +33,11 @@ struct MessageRowView: View {
         .padding(.horizontal)
         .padding(.vertical, 4)
     }
-
+    
     private var avatar: some View {
-        Image(isUser ? "user_avatar" : "bot_avatar") 
+        Image(systemName: isUser ? "person.crop.circle.fill" : "bolt.circle.fill")
             .resizable()
-            .aspectRatio(contentMode: .fill)
             .frame(width: 32, height: 32)
-            .clipShape(Circle())
-            .overlay(Circle().stroke(Color.gray.opacity(0.4), lineWidth: 1))
-    }
-
-    private var messageBubble: some View {
-        Text(message.text)
-            .padding(.horizontal, 14)
-            .padding(.vertical, 10)
-            .background(isUser ? Color.blue.opacity(0.8) : Color.gray.opacity(0.2))
-            .foregroundColor(isUser ? .white : .primary)
-            .cornerRadius(22)
-            .multilineTextAlignment(.leading)
+            .foregroundColor(isUser ? .blue : .gray)
     }
 }
