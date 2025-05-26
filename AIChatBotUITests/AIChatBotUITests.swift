@@ -9,35 +9,81 @@ import XCTest
 
 final class AIChatBotUITests: XCTestCase {
 
+    let app = XCUIApplication()
+
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-
-        // In UI tests it is usually best to stop immediately when a failure occurs.
         continueAfterFailure = false
-
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
+        app.launch()
     }
 
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        // Clean up if needed
     }
 
-    @MainActor
-    func testExample() throws {
-        // UI tests must launch the application that they test.
+    func testMessageInputAndSendButton() throws {
+        let messageField = app.textFields["MessageInputField"]
+        XCTAssertTrue(messageField.exists, "TextField should exist")
+
+        messageField.tap()
+        messageField.typeText("Hello GPT!")
+
+        let sendButton = app.buttons["SendButton"]
+        XCTAssertTrue(sendButton.exists, "Send button should exist")
+        XCTAssertTrue(sendButton.isEnabled, "Send button should be enabled after typing")
+
+        sendButton.tap()
+
+        // Wait for message to appear
+        let sentMessage = app.staticTexts["Hello GPT!"]
+        let exists = sentMessage.waitForExistence(timeout: 5)
+        XCTAssertTrue(exists, "Sent message should appear in chat")
+    }
+    func testArrowButtonsVisibilityAndTapping() throws {
         let app = XCUIApplication()
         app.launch()
 
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        // Initially, only up arrow should be visible (since we are at bottom)
+        let upArrow = app.buttons["ScrollToTopButton"]
+        let downArrow = app.buttons["ScrollDownButton"]
+        
+        XCTAssertTrue(upArrow.waitForExistence(timeout: 5), "Up arrow should be visible initially")
+        XCTAssertFalse(downArrow.exists, "Down arrow should NOT be visible initially")
+
+        // Tap up arrow to scroll to top
+        upArrow.tap()
+
+        // Now down arrow should appear and up arrow disappear after scrolling to top
+        XCTAssertTrue(downArrow.waitForExistence(timeout: 5), "Down arrow should be visible after scrolling up")
+        XCTAssertFalse(upArrow.exists, "Up arrow should NOT be visible after scrolling to top")
+
+        // Tap down arrow to scroll back to bottom
+        downArrow.tap()
+
+        // Up arrow should reappear after scrolling to bottom
+        XCTAssertTrue(upArrow.waitForExistence(timeout: 5), "Up arrow should be visible after scrolling down")
+        XCTAssertFalse(downArrow.exists, "Down arrow should NOT be visible after scrolling down")
     }
 
-    @MainActor
-    func testLaunchPerformance() throws {
-        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {
-            // This measures how long it takes to launch your application.
-            measure(metrics: [XCTApplicationLaunchMetric()]) {
-                XCUIApplication().launch()
-            }
-        }
+    func testScrollToTopArrowAppearsAfterScrolling() throws {
+        // Wait for messages to load and scroll view to appear
+        sleep(2)
+
+        // Swipe up to scroll down first (this hides the up arrow initially)
+        app.swipeUp()
+        sleep(1)
+
+        // Then swipe down to simulate scrolling to top
+        app.swipeDown()
+        sleep(1)
+
+        let scrollToTopButton = app.buttons["ScrollToTopButton"]
+        XCTAssertTrue(scrollToTopButton.exists, "Scroll-to-top button should appear after scrolling")
+        
+    }
+    func testScrollToBottomButton() throws {
+        // ... prepare by scrolling up ...
+        let scrollDownButton = app.buttons["ScrollDownButton"]
+        XCTAssertTrue(scrollDownButton.exists)
+        scrollDownButton.tap()
     }
 }
