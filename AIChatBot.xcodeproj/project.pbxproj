@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		59875A962DDE5B4C00044E2E /* Secrets.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 59875A952DDE5B4C00044E2E /* Secrets.xcconfig */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		59875A5C2DDDEDA200044E2E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +31,8 @@
 		59875A492DDDEDA100044E2E /* AIChatBot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AIChatBot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		59875A5B2DDDEDA200044E2E /* AIChatBotTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AIChatBotTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		59875A652DDDEDA200044E2E /* AIChatBotUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AIChatBotUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		59875A952DDE5B4C00044E2E /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
+		59EC65672DE1AB92009F71B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -75,6 +81,8 @@
 		59875A402DDDEDA100044E2E = {
 			isa = PBXGroup;
 			children = (
+				59EC65672DE1AB92009F71B1 /* Info.plist */,
+				59875A952DDE5B4C00044E2E /* Secrets.xcconfig */,
 				59875A4B2DDDEDA100044E2E /* AIChatBot */,
 				59875A5E2DDDEDA200044E2E /* AIChatBotTests */,
 				59875A682DDDEDA200044E2E /* AIChatBotUITests */,
@@ -212,6 +220,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				59875A962DDE5B4C00044E2E /* Secrets.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -271,6 +280,7 @@
 /* Begin XCBuildConfiguration section */
 		59875A6D2DDDEDA200044E2E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 59875A952DDE5B4C00044E2E /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -334,6 +344,7 @@
 		};
 		59875A6E2DDDEDA200044E2E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 59875A952DDE5B4C00044E2E /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -390,6 +401,7 @@
 		};
 		59875A702DDDEDA200044E2E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 59875A952DDE5B4C00044E2E /* Secrets.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -399,6 +411,9 @@
 				DEVELOPMENT_TEAM = AYYVX94KMN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "We need microphone access for voice input.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "We need speech recognition to convert your voice to text";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -409,6 +424,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				OPENROUTER_API_KEY = "$(OPENROUTER_API_KEY)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.anjuannemathew.-SwiftUITraining.AIChatBot";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -419,6 +435,7 @@
 		};
 		59875A712DDDEDA200044E2E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 59875A952DDE5B4C00044E2E /* Secrets.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -428,6 +445,9 @@
 				DEVELOPMENT_TEAM = AYYVX94KMN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "We need microphone access for voice input.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "We need speech recognition to convert your voice to text";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -438,6 +458,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				OPENROUTER_API_KEY = "$(OPENROUTER_API_KEY)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.anjuannemathew.-SwiftUITraining.AIChatBot";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -448,6 +469,7 @@
 		};
 		59875A732DDDEDA200044E2E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 59875A952DDE5B4C00044E2E /* Secrets.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -467,6 +489,7 @@
 		};
 		59875A742DDDEDA200044E2E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 59875A952DDE5B4C00044E2E /* Secrets.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -486,6 +509,7 @@
 		};
 		59875A762DDDEDA200044E2E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 59875A952DDE5B4C00044E2E /* Secrets.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -503,6 +527,7 @@
 		};
 		59875A772DDDEDA200044E2E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 59875A952DDE5B4C00044E2E /* Secrets.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
