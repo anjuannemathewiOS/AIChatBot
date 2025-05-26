@@ -27,6 +27,7 @@ struct ChatView: View {
             .ignoresSafeArea()
 
             VStack(spacing: 0) {
+                // Header
                 HStack(spacing: 10) {
                     Image(systemName: "bolt.circle.fill")
                         .foregroundColor(.blue)
@@ -65,9 +66,10 @@ struct ChatView: View {
                             .padding(.top, 10)
                             .background(
                                 GeometryReader { scrollGeo -> Color in
-                                    let offsetY = scrollGeo.frame(in: .named("scroll")).minY
                                     DispatchQueue.main.async {
                                         scrollViewHeight = scrollGeo.size.height
+                                        
+                                        let offsetY = scrollGeo.frame(in: .named("scroll")).minY
                                         updateArrowVisibility(offsetY: offsetY, contentHeight: contentHeight, scrollViewHeight: scrollViewHeight)
                                     }
                                     return Color.clear
@@ -92,6 +94,7 @@ struct ChatView: View {
                                             .font(.largeTitle)
                                             .foregroundColor(.blue.opacity(0.7))
                                             .padding(.top, 10)
+                                            .accessibilityIdentifier("ScrollToTopButton")
                                     }
                                 }
 
@@ -105,6 +108,7 @@ struct ChatView: View {
                                             .font(.largeTitle)
                                             .foregroundColor(.blue.opacity(0.7))
                                             .padding(.bottom, 10)
+                                            .accessibilityIdentifier("ScrollDownButton")
                                     }
                                 }
                             }
@@ -113,8 +117,10 @@ struct ChatView: View {
                     }
                 }
 
+                // Input area
                 HStack(spacing: 10) {
                     TextField("Say something...", text: $viewModel.inputText)
+                        .accessibilityIdentifier("MessageInputField")
                         .textInputAutocapitalization(.never)
                         .disableAutocorrection(true)
                         .padding(12)
@@ -133,6 +139,7 @@ struct ChatView: View {
                             .background(viewModel.inputText.isEmpty ? Color.gray : Color.blue)
                             .clipShape(Circle())
                     }
+                    .accessibilityIdentifier("SendButton")
                     .disabled(viewModel.inputText.isEmpty)
 
                     Button(action: {
@@ -164,8 +171,8 @@ struct ChatView: View {
     }
 
     private func updateArrowVisibility(offsetY: CGFloat, contentHeight: CGFloat, scrollViewHeight: CGFloat) {
-        let topThreshold: CGFloat = -10
-        let bottomThreshold: CGFloat = -(contentHeight - scrollViewHeight) - 10
+        let topThreshold: CGFloat = -10 // near top
+        let bottomThreshold: CGFloat = -(contentHeight - scrollViewHeight) - 10 // near bottom
 
         if offsetY >= topThreshold {
             // At or near top
@@ -176,10 +183,14 @@ struct ChatView: View {
             showUpArrow = true
             showDownArrow = false
         } else {
-            // Middle
+            // Somewhere in middle
             showUpArrow = true
             showDownArrow = true
         }
+
+        // Debug logs
+        print("offsetY: \(offsetY), topThreshold: \(topThreshold), bottomThreshold: \(bottomThreshold)")
+        print("showUpArrow: \(showUpArrow), showDownArrow: \(showDownArrow)")
     }
 
     private func scrollToTop(proxy: ScrollViewProxy) {
@@ -198,4 +209,3 @@ struct ChatView: View {
         }
     }
 }
-

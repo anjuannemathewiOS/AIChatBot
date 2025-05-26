@@ -4,7 +4,6 @@
 //
 //  Created by Anju Anne Mathew on 21/05/2025.
 //
-//private let openRouterApiKey = "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"
 
 
 import Foundation
@@ -146,7 +145,7 @@ class ChatViewModel: ObservableObject {
         }
     }
 
-    private func saveMessages() {
+    internal func saveMessages() {
         if let data = try? JSONEncoder().encode(messages) {
             UserDefaults.standard.set(data, forKey: "chatMessages")
         }
